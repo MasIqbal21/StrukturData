@@ -1,0 +1,42 @@
+/* =====================================================
+   SORTLAB — SORTI Mascot Styles
+   ===================================================== */
+
+.glow{
+    position:absolute;
+
+    width:240px;
+    height:240px;
+
+    border-radius:50%;
+
+    background:radial-gradient(circle,#06B6D455 0%,transparent 70%);
+
+    filter:blur(28px);
+}
+
+.sorti{
+    width:min(100%,200px);
+
+    position:relative;
+    z-index:2;
+
+    animation:float 3.5s ease-in-out infinite;
+
+    transition:
+        opacity .18s ease,
+        transform .25s ease;
+}
+
+.fade-out{
+    opacity:0;
+    transform:translateY(8px) scale(.96);
+}
+
+@media (max-width:980px){
+
+.sorti{
+    width:160px;
+}
+
+}
