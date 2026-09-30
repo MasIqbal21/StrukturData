@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SORTLAB | Interactive Sorting Laboratory</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animation.css">
+    <link rel="stylesheet" href="css/sorti.css">
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <header class="navbar">
+
+        <div class="logo">
+            <span class="dot"></span>
+            SORTLAB
+        </div>
+
+        <nav>
+            <a href="#" class="nav-link active" data-section="materi">Materi</a>
+            <a href="#" class="nav-link" data-section="studikasus">Studi Kasus Sorting</a>
+        </nav>
+
+        <button
+            class="start-btn"
+            id="ctaBtn">
+            Mulai Studi Kasus
+        </button>
+
+    </header>
+
+    <!-- ================= MATERI ================= -->
+
+    <section id="materiSection" class="page-section">
+
+        <div class="section-inner">
+
+            <span class="label">SORTLAB · MATERI</span>
+
+            <h1>Materi Pengurutan (Sorting)</h1>
+
+            <p class="description">
+                Sorting (pengurutan) adalah proses menyusun sekumpulan data ke dalam
+                urutan tertentu, umumnya menaik (ascending) dari nilai terkecil ke
+                terbesar. Algoritma sorting terbagi menjadi dua kelompok besar:
+                <strong>comparison-based</strong> — membandingkan pasangan elemen
+                satu per satu, seperti Bubble, Exchange, Selection, Insertion, Shell,
+                dan Quick Sort — dan <strong>non-comparison-based</strong> — mengurutkan
+                berdasarkan properti data itu sendiri tanpa membandingkan langsung,
+                seperti Radix Sort. Berikut ringkasan ketujuh algoritma yang dibahas
+                pada halaman Studi Kasus.
+            </p>
+
+            <!-- VISUALISASI INTERAKTIF -->
+
+            <h2 class="sub-heading">Visualisasi Interaktif</h2>
+
+            <p class="description">
+                Pilih algoritma, lalu lihat langkah demi langkahnya bekerja pada
+                sekumpulan angka acak — ditemani SORTI di sampingnya.
+            </p>
+
+            <div class="panel viz-controls">
+
+                <div class="sub-tabs" id="materiAlgoTabs">
+                    <button class="sub-tab active" data-algo="bubble">Bubble</button>
+                    <button class="sub-tab" data-algo="exchange">Exchange</button>
+                    <button class="sub-tab" data-algo="selection">Selection</button>
+                    <button class="sub-tab" data-algo="insertion">Insertion</button>
+                    <button class="sub-tab" data-algo="shell">Shell</button>
+                    <button class="sub-tab" data-algo="quick">Quick</button>
+                    <button class="sub-tab" data-algo="radix">Radix</button>
+                </div>
+
+                <button class="btn primary" id="btnMateriShuffle">🔀 Acak Angka</button>
+
+            </div>
+
+            <div class="stats-panel">
+
+                <div class="stat-box">
+                    <span>Perbandingan</span>
+                    <h3 id="materiCompareCount">0</h3>
+                </div>
+
+                <div class="stat-box">
+                    <span id="materiOpsLabel">Tukar</span>
+                    <h3 id="materiOpsCount">0</h3>
+                </div>
+
+                <div class="stat-box">
+                    <span>Langkah</span>
+                    <h3 id="materiStepCount">0 / 0</h3>
+                </div>
+
+            </div>
+
+            <div class="panel stage-panel">
+
+                <div class="stage-mascot">
+                    <div class="glow"></div>
+                    <img id="sortiCharacterMateri" class="sorti" src="assets/sorti/welcome.png" alt="SORTI">
+                </div>
+
+                <div class="stage-viz">
+                    <div class="panel-title">Visualisasi Array</div>
+                    <div class="mbars" id="materiBars"></div>
+                </div>
+
+            </div>
+
+            <div class="panel note-bar" id="materiNoteBar">
+                Tekan salah satu tab algoritma atau <b>Acak Angka</b> untuk mulai.
+            </div>
+
+            <div class="panel code-panel">
+                <div class="code-header">
+                    <span id="materiCodeTitle">Bubble Sort — Pseudocode</span>
+                </div>
+                <pre class="code-block" id="materiCodeBlock"></pre>
+            </div>
+
+            <div class="panel playback">
+                <button class="btn" id="materiPrev">⟵ Sebelumnya</button>
+                <button class="btn primary" id="materiPlay">▶ Putar</button>
+                <button class="btn" id="materiNext">Berikutnya ⟶</button>
+                <button class="btn ghost" id="materiReset">Ulang</button>
+                <span class="progress" id="materiProgress">0 / 0</span>
+                <div class="spacer"></div>
+                <div class="speed">
+                    <span>Kecepatan</span>
+                    <input type="range" id="materiSpeed" min="150" max="1200" step="50" value="500">
+                </div>
+            </div>
+
+            <h2 class="sub-heading">Ringkasan Ketujuh Algoritma</h2>
+
+            <div class="materi-grid" id="materiGrid"></div>
+
+        </div>
+
+    </section>
+
+    <!-- ================= STUDI KASUS ================= -->
+
+    <section id="studiKasusSection" class="page-section hidden">
+
+        <div class="section-inner">
+
+            <span class="label">SORTLAB · STUDI KASUS</span>
+
+            <h1>Sistem Informasi Kelas</h1>
+
+            <p class="description">
+                Studi kasus penerapan sorting di kehidupan sehari-hari: mengelola
+                dan mengurutkan data nilai mahasiswa satu kelas memakai algoritma
+                pilihanmu, lalu menerapkan hasilnya ke data yang sesungguhnya.
+            </p>
+
+            <div class="sub-tabs" id="subTabs">
+                <button class="sub-tab active" data-view="data">01 · Data Mahasiswa</button>
+                <button class="sub-tab" data-view="sort">02 · Visualisasi Sorting</button>
+                <button class="sub-tab" data-view="compare">03 · Bandingkan Algoritma</button>
+            </div>
+
+            <!-- VIEW 1: DATA MAHASISWA -->
+
+            <div class="sk-view active" id="view-data">
+
+                <form class="panel add-form" id="addForm">
+
+                    <div class="field nim">
+                        <label for="inNim">NIM</label>
+                        <input id="inNim" type="text" inputmode="numeric" placeholder="2401xxx" maxlength="12">
+                    </div>
+
+                    <div class="field nama">
+                        <label for="inNama">Nama lengkap</label>
+                        <input id="inNama" type="text" placeholder="Nama mahasiswa" maxlength="40">
+                    </div>
+
+                    <div class="field nilai">
+                        <label for="inNilai">Nilai</label>
+                        <input id="inNilai" type="number" min="0" max="100" placeholder="0–100">
+                    </div>
+
+                    <button type="submit" class="btn primary">+ Tambah</button>
+
+                    <div class="form-error" id="formError"></div>
+
+                </form>
+
+                <div class="panel table-panel">
+
+                    <div class="table-wrap">
+                        <table class="roster">
+                            <thead>
+                                <tr><th>No</th><th>NIM</th><th>Nama</th><th>Nilai</th><th></th></tr>
+                            </thead>
+                            <tbody id="rosterBody"></tbody>
+                        </table>
+                    </div>
+
+                    <div class="roster-foot">
+                        <span id="rosterCount">0 mahasiswa</span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- VIEW 2: VISUALISASI SORTING -->
+
+            <div class="sk-view" id="view-sort">
+
+                <div class="sub-tabs" id="sortModeToggle">
+                    <button class="sub-tab active" data-mode="solo">Sorting Tunggal</button>
+                    <button class="sub-tab" data-mode="race">Sorting Ganda (Race)</button>
+                </div>
+
+                <!-- MODE: SORTING TUNGGAL -->
+
+                <div id="soloModePanel">
+
+                <div class="panel sort-controls">
+
+                    <div class="field">
+                        <label for="selAlgo">Algoritma</label>
+                        <select id="selAlgo">
+                            <option value="bubble">Bubble Sort</option>
+                            <option value="exchange">Exchange Sort</option>
+                            <option value="selection">Selection Sort</option>
+                            <option value="insertion">Insertion Sort</option>
+                            <option value="shell">Shell Sort</option>
+                            <option value="quick">Quick Sort</option>
+                            <option value="radix">Radix Sort</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="selKey">Urutkan berdasarkan</label>
+                        <select id="selKey">
+                            <option value="nilai">Nilai</option>
+                            <option value="nama">Nama</option>
+                            <option value="nim">NIM</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="selOrder">Arah</label>
+                        <select id="selOrder">
+                            <option value="asc">Naik (kecil → besar)</option>
+                            <option value="desc">Turun (besar → kecil)</option>
+                        </select>
+                    </div>
+
+                    <button class="btn primary" id="btnRun">▶ Jalankan Visualisasi</button>
+
+                    <span class="stat-chip" id="chipStatus">Belum dijalankan</span>
+
+                    <div class="field-note" id="algoNote"></div>
+
+                </div>
+
+                <div class="operation-card">
+                    <span>Langkah Saat Ini</span>
+                    <h2 id="skOperationTitle">IDLE</h2>
+                    <p id="skOperationDesc">Pilih algoritma lalu tekan Jalankan Visualisasi.</p>
+                </div>
+
+                <div class="stats-panel">
+
+                    <div class="stat-box">
+                        <span>Perbandingan</span>
+                        <h3 id="skCompareCount">0</h3>
+                    </div>
+
+                    <div class="stat-box">
+                        <span id="skOpsLabel">Tukar</span>
+                        <h3 id="skOpsCount">0</h3>
+                    </div>
+
+                    <div class="stat-box">
+                        <span>Langkah</span>
+                        <h3 id="skStepCount">0 / 0</h3>
+                    </div>
+
+                </div>
+
+                <div class="panel stage-panel">
+
+                    <div class="stage-mascot">
+                        <div class="glow"></div>
+                        <img id="sortiCharacter" class="sorti" src="assets/sorti/welcome.png" alt="SORTI">
+                    </div>
+
+                    <div class="stage-viz">
+                        <div class="panel-title">Posisi Data</div>
+                        <div class="slots" id="slotsBox"></div>
+                    </div>
+
+                </div>
+
+                <div class="panel note-bar" id="noteBar">
+                    Tekan <b>Jalankan Visualisasi</b> untuk mulai.
+                </div>
+
+                <div class="panel code-panel">
+                    <div class="code-header">
+                        <span id="skCodeTitle">Bubble Sort — Pseudocode</span>
+                    </div>
+                    <pre class="code-block" id="skCodeBlock"></pre>
+                </div>
+
+                <div class="panel playback">
+                    <button class="btn" id="btnPrev">⟵ Sebelumnya</button>
+                    <button class="btn primary" id="btnPlay">▶ Putar</button>
+                    <button class="btn" id="btnNext">Berikutnya ⟶</button>
+                    <button class="btn ghost" id="btnReset">Ulang</button>
+                    <span class="progress" id="progressEl">0 / 0</span>
+                    <div class="spacer"></div>
+                    <div class="speed">
+                        <span>Kecepatan</span>
+                        <input type="range" id="speedInput" min="150" max="1200" step="50" value="600">
+                    </div>
+                </div>
+
+                <div class="apply-row">
+                    <button class="btn" id="btnApply" disabled>✓ Terapkan urutan ini ke Data Mahasiswa</button>
+                    <span class="apply-note" id="applyNote"></span>
+                </div>
+
+                </div>
+
+                <!-- MODE: SORTING GANDA (RACE) -->
+
+                <div id="raceModePanel" class="hidden">
+
+                    <div class="panel sort-controls">
+
+                        <div class="field">
+                            <label for="raceAlgoA">Algoritma A</label>
+                            <select id="raceAlgoA"></select>
+                        </div>
+
+                        <div class="field">
+                            <label for="raceAlgoB">Algoritma B</label>
+                            <select id="raceAlgoB"></select>
+                        </div>
+
+                        <div class="field">
+                            <label for="raceKey">Urutkan berdasarkan</label>
+                            <select id="raceKey">
+                                <option value="nilai">Nilai</option>
+                                <option value="nama">Nama</option>
+                                <option value="nim">NIM</option>
+                            </select>
+                        </div>
+
+                        <div class="field">
+                            <label for="raceOrder">Arah</label>
+                            <select id="raceOrder">
+                                <option value="asc">Naik (kecil → besar)</option>
+                                <option value="desc">Turun (besar → kecil)</option>
+                            </select>
+                        </div>
+
+                        <button class="btn primary" id="btnRaceRun">▶ Jalankan Race</button>
+
+                        <span class="stat-chip" id="raceChipStatus">Belum dijalankan</span>
+
+                        <div class="field-note" id="raceAlgoNote"></div>
+
+                    </div>
+
+                    <div class="stage-panel race-mascot-strip">
+                        <div class="stage-mascot">
+                            <div class="glow"></div>
+                            <img id="sortiCharacterRace" class="sorti" src="assets/sorti/welcome.png" alt="SORTI">
+                        </div>
+                        <div class="stage-viz race-mascot-caption">
+                            <div class="panel-title">SORTI</div>
+                            <p class="race-caption">Menonton dua algoritma bertanding pada data yang sama.</p>
+                        </div>
+                    </div>
+
+                    <div class="race-grid">
+
+                        <div class="panel race-col" id="raceColA">
+                            <div class="race-head">
+                                <h3 id="raceNameA">Algoritma A</h3>
+                                <span class="win-crown" id="raceCrownA">🏆</span>
+                                <span class="fin-badge" id="raceFinA">selesai</span>
+                            </div>
+                            <div class="race-stats">
+                                <span class="stat-chip">Perbandingan: <b id="raceCompA">0</b></span>
+                                <span class="stat-chip"><span id="raceOpsLabelA">Tukar</span>: <b id="raceOpsA">0</b></span>
+                            </div>
+                            <div class="panel-title">Pseudocode</div>
+                            <pre class="code-block race-code" id="raceCodeA"></pre>
+                            <div class="panel-title">Posisi Data</div>
+                            <div class="slots race-slots" id="raceSlotsA"></div>
+                        </div>
+
+                        <div class="panel race-col" id="raceColB">
+                            <div class="race-head">
+                                <h3 id="raceNameB">Algoritma B</h3>
+                                <span class="win-crown" id="raceCrownB">🏆</span>
+                                <span class="fin-badge" id="raceFinB">selesai</span>
+                            </div>
+                            <div class="race-stats">
+                                <span class="stat-chip">Perbandingan: <b id="raceCompB">0</b></span>
+                                <span class="stat-chip"><span id="raceOpsLabelB">Tukar</span>: <b id="raceOpsB">0</b></span>
+                            </div>
+                            <div class="panel-title">Pseudocode</div>
+                            <pre class="code-block race-code" id="raceCodeB"></pre>
+                            <div class="panel-title">Posisi Data</div>
+                            <div class="slots race-slots" id="raceSlotsB"></div>
+                        </div>
+
+                    </div>
+
+                    <div class="panel note-bar" id="raceNoteBar">
+                        Tekan <b>Jalankan Race</b> untuk mulai membandingkan kedua algoritma.
+                    </div>
+
+                    <div class="panel winner-banner" id="raceWinnerBanner"></div>
+
+                    <div class="panel playback">
+                        <button class="btn" id="raceBtnPrev">⟵ Sebelumnya</button>
+                        <button class="btn primary" id="raceBtnPlay">▶ Putar</button>
+                        <button class="btn" id="raceBtnNext">Berikutnya ⟶</button>
+                        <button class="btn ghost" id="raceBtnReset">Ulang</button>
+                        <span class="progress" id="raceProgressEl">0 / 0</span>
+                        <div class="spacer"></div>
+                        <div class="speed">
+                            <span>Kecepatan</span>
+                            <input type="range" id="raceSpeedInput" min="150" max="1200" step="50" value="600">
+                        </div>
+                    </div>
+
+                    <div class="apply-row">
+                        <button class="btn" id="raceBtnApply" disabled>✓ Terapkan urutan ini ke Data Mahasiswa</button>
+                        <span class="apply-note" id="raceApplyNote"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- VIEW 3: BANDINGKAN ALGORITMA -->
+
+            <div class="sk-view" id="view-compare">
+
+                <div class="panel compare-table-wrap">
+                    <div class="table-wrap">
+                        <table class="compare-table">
+                            <thead>
+                                <tr><th>Algoritma</th><th>Rata-rata</th><th>Terburuk</th><th>Ruang</th><th>Stabil?</th></tr>
+                            </thead>
+                            <tbody id="compareTableBody"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="panel live-controls">
+
+                    <div class="field">
+                        <label for="cmpAlgoA">Algoritma A</label>
+                        <select id="cmpAlgoA"></select>
+                    </div>
+
+                    <div class="field">
+                        <label for="cmpAlgoB">Algoritma B</label>
+                        <select id="cmpAlgoB"></select>
+                    </div>
+
+                    <div class="field">
+                        <label for="cmpKey">Urutkan berdasarkan</label>
+                        <select id="cmpKey">
+                            <option value="nilai">Nilai</option>
+                            <option value="nama">Nama</option>
+                            <option value="nim">NIM</option>
+                        </select>
+                    </div>
+
+                    <div class="field">
+                        <label for="cmpOrder">Arah</label>
+                        <select id="cmpOrder">
+                            <option value="asc">Naik</option>
+                            <option value="desc">Turun</option>
+                        </select>
+                    </div>
+
+                    <button class="btn primary" id="btnCompareRun">Hitung dengan Data Saat Ini</button>
+
+                </div>
+
+                <div class="result-grid" id="resultGrid" style="display:none;">
+
+                    <div class="panel result-card" id="cardA">
+                        <h3 id="cardATitle">Algoritma A <span class="win-tag" id="tagAWin">Lebih cepat</span></h3>
+                        <div class="bar-row"><span class="lbl">Perbandingan</span><div class="bar-track"><div class="bar-fill" id="aBarComp"></div></div><span class="num" id="aNumComp">0</span></div>
+                        <div class="bar-row"><span class="lbl" id="aOpsLbl">Tukar</span><div class="bar-track"><div class="bar-fill" id="aBarOps"></div></div><span class="num" id="aNumOps">0</span></div>
+                        <div class="bar-row"><span class="lbl">Total operasi</span><div class="bar-track"><div class="bar-fill" id="aBarTotal"></div></div><span class="num" id="aNumTotal">0</span></div>
+                    </div>
+
+                    <div class="panel result-card" id="cardB">
+                        <h3 id="cardBTitle">Algoritma B <span class="win-tag" id="tagBWin">Lebih cepat</span></h3>
+                        <div class="bar-row"><span class="lbl">Perbandingan</span><div class="bar-track"><div class="bar-fill" id="bBarComp"></div></div><span class="num" id="bNumComp">0</span></div>
+                        <div class="bar-row"><span class="lbl" id="bOpsLbl">Tukar</span><div class="bar-track"><div class="bar-fill" id="bBarOps"></div></div><span class="num" id="bNumOps">0</span></div>
+                        <div class="bar-row"><span class="lbl">Total operasi</span><div class="bar-track"><div class="bar-fill" id="bBarTotal"></div></div><span class="num" id="bNumTotal">0</span></div>
+                    </div>
+
+                </div>
+
+                <div class="result-verdict" id="resultVerdict"></div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- JAVASCRIPT -->
+
+    <script src="js/sorti.js"></script>
+    <script src="js/sorting.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+</html>
